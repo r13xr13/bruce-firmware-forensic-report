@@ -4,6 +4,8 @@ My name does not matter. What matters is that I stood up for the truth about the
 
 This repository contains my forensic audit of the Bruce firmware ecosystem. It covers the Bruce firmware the bmorcelli launcher and the App Store infrastructure. It examines security flaws supply chain risks and the hidden mechanisms within the GhostStrats theme.
 
+The Bruce firmware source code is included in this repository (in the bruce-firmware directory) so that readers can verify my audit results by examining the actual source code referenced in the reports.
+
 If you want to understand the details of the findings the exploitation chain and the evidence collected please read the two reports included here.
 
 FORENSIC_AUDIT.md is the full technical audit with source code analysis network mapping and remediation suggestions.
