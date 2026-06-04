@@ -8,6 +8,8 @@ This repository contains my forensic audit of the Bruce firmware ecosystem. It c
 
 The Bruce firmware source code is included in this repository (in the bruce-firmware directory) so that readers can verify my audit results by examining the actual source code referenced in the reports.
 
+**Source reference:** Bruce firmware src v1.15 from rf-reaper/firmware-1.15/src (commit aligned with ESP32 firmware v1.15-fixed)
+
 If you want to understand the details of the findings the exploitation chain and the evidence collected please read the two reports included here.
 
 FORENSIC_AUDIT.md is the full technical audit with source code analysis network mapping and remediation suggestions.
