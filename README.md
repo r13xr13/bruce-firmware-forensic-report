@@ -17,6 +17,10 @@ Both reports are written in a first person conversational tone and avoid unneces
 
 Please note that the reports are the result of independent research and do not represent the views of any organization or individual mentioned within.
 
+## Disclaimer
+
+This work is conducted as public interest research in my capacity as a watchdog auditor and reporter. I am not trying to harm the Bruce developers or the community. These issues have existed for years across multiple firmware versions and affect many deployed devices. The purpose of this audit is to document the facts so that users can make informed decisions about their devices and so that the security community has a clear record of the architecture. Responsible disclosure was not pursued because the issues are long standing widely deployed and the maintainers have had ample opportunity to address them.
+
 For questions or comments feel free to open an issue or contact me directly.
 
 -- Heavy Butter (r13xr13)

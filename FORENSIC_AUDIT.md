@@ -328,7 +328,7 @@ setSleepMode() [src/core/settings.cpp:166]
  | delay(200)
  |
  break > returnToMenu
-Deep Sleep path (BROKEN on reaper):
+Deep Sleep path (BROKEN on ALL hardware running Bruce firmware):
 User selects "Deep Sleep" from menu
  |
  
@@ -553,7 +553,7 @@ All of the following are baked into the firmware by default:
 - WiFi passwords and secrets stored in plaintext on the filesystem
 - No permission prompts when installing apps from the App Store
 - No audit trail of what scripts have done
-- Deep Sleep unavailable on the Reaper board
+- Deep Sleep unavailable on ALL boards running Bruce firmware or bmorcelli launcher (DEEPSLEEP_WAKEUP_PIN=-1 by default)
 The combination of these findings is worse than any one of them alone.
 A device that never actually turns off + can exfiltrate stored data over the network + receives unverified code from a remote server = a very effective persistent access tool. For whoever controls that server. Or whoever can sit between the device and that server.
 
