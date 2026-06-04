@@ -20,3 +20,11 @@ Please note that the reports are the result of independent research and do not r
 For questions or comments feel free to open an issue or contact me directly.
 
 -- Heavy Butter (r13xr13)
+
+---
+
+<div align="center">
+
+**Audit** by [HEAVYBUTTER](https://github.com/r13xr13)
+
+</div>
