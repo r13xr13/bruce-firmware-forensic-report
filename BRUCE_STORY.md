@@ -3,7 +3,7 @@
 
 I was working on a fix for a hardware variant that runs Bruce firmware. I went into the source code and started noticing things about the wider Bruce firmware ecosystem that I was not expecting. One thing led to another, and I ended up mapping out a supply chain attack chain, finding a steganographic signaling system, profiling the developers in the ecosystem, and tracing a contributor's infrastructure back ten years through public certificate logs.
 
-These findings are about the Bruce firmware project as a whole. The device I was working on was just the door I walked through. These findings are about the Bruce firmware project as a whole.
+These findings are about the Bruce firmware project as a whole. The device I was working on was just the door I walked through.
 
 Here's what I found and the road I took to find it.
 
