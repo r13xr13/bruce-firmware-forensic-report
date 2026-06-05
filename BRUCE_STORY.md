@@ -1,9 +1,9 @@
 # Bruce Firmware: What I Found and How I Got There
 **Affects:** Every board running Bruce firmware or the bmorcelli launcher
 
-I was troubleshooting an RF Reaper board -- one of the hardware variants that runs Bruce firmware. I went into the source code to figure out some issues with it. While I was there, I started noticing things about the wider Bruce firmware ecosystem that I was not expecting. One thing led to another, and I ended up mapping out a supply chain attack chain, finding a steganographic signaling system, profiling the developers in the ecosystem, and tracing a contributor's infrastructure back ten years through public certificate logs.
+I was working on a fix for a hardware variant that runs Bruce firmware. I went into the source code and started noticing things about the wider Bruce firmware ecosystem that I was not expecting. One thing led to another, and I ended up mapping out a supply chain attack chain, finding a steganographic signaling system, profiling the developers in the ecosystem, and tracing a contributor's infrastructure back ten years through public certificate logs.
 
-This isnt about the Reaper board specifically. The Reaper was just the door I walked through. These findings are about the Bruce firmware project as a whole.
+These findings are about the Bruce firmware project as a whole. The device I was working on was just the door I walked through. These findings are about the Bruce firmware project as a whole.
 
 Here's what I found and the road I took to find it.
 
@@ -24,7 +24,7 @@ Three big findings came out of reading the source code:
 
 **First, the App Store runs over plain HTTP with no integrity checks.** Anyone on the same WiFi, your ISP, a compromised DNS, any hop between the device and the server -- they could swap what code the device downloads. No hash verification. No signature check. No way to tell the real App Store from a malicious one.
 
-**Second, the device never actually turns off.** The screen turns off. The CPU drops from 240 to 80 MHz. But the WiFi stays connected, BLE keeps advertising, Sub-GHz keeps listening, NRF24 stays powered, IR and RFID stay active. The device stays on the network. It keeps scanning and collecting. It just looks dead. There is no code path that truly powers the device down through the menu. Deep Sleep is broken on every board that does not define DEEPSLEEP_WAKEUP_PIN -- which is most of them. This affects all boards running Bruce firmware, not just the Reaper.
+**Second, the device never actually turns off.** The screen turns off. The CPU drops from 240 to 80 MHz. But the WiFi stays connected, BLE keeps advertising, Sub-GHz keeps listening, NRF24 stays powered, IR and RFID stay active. The device stays on the network. It keeps scanning and collecting. It just looks dead. There is no code path that truly powers the device down through the menu. Deep Sleep is broken on every board that does not define DEEPSLEEP_WAKEUP_PIN -- which is most of them. This affects all boards running Bruce firmware.
 
 **Third, the JavaScript interpreter has no sandbox.** The require() function -- which lets scripts access storage, wifi, subghz, ble, gpio, badusb -- is a single line that does a global property lookup. No whitelist. No permissions. No capability checks. Any script downloaded from the App Store could read every file on the device, write new files, hit any network host, transmit on any RF frequency.
 
@@ -106,7 +106,7 @@ Let me be clear about what the public record shows and what it doesn't.
 - The App Store distributes code over plain HTTP with no integrity checks
 - The JavaScript interpreter has no sandbox
 - Sleep mode keeps all radios active while the display is off
-- Deep Sleep is broken on the Reaper board
+- Deep Sleep is broken on all hardware
 - GhostStrats contains LSB matching steganography in all 14 PNG files
 - The extracted data is encrypted and can't be decrypted with keys I tried
 - The key_phase2 filename maps to the JS interpreter icon

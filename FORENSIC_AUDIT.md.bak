@@ -3,19 +3,19 @@
 **App Store infra:** emericklaw
 **Date:** 2026-06-03
 ---
-I was working on a fix for a hardware variant running Bruce firmware. While I was in the code, I started reading through the Bruce firmware source more broadly. All ~1,732 lines of the critical C++ settings, power management, the MJS interpreter guts, all 20+ registered JS modules, and the App Store channel at `ghp.iceis.co.uk`.
+I was poking at an RF Reaper board -- one of the hardware variants running Bruce firmware. I was trying to sort out some issues with it. While I was in the code, I started reading through the Bruce firmware source more broadly. All ~1,732 lines of the critical C++ settings, power management, the MJS interpreter guts, all 20+ registered JS modules, and the App Store channel at `ghp.iceis.co.uk`.
 
 I stumbled onto some things I was not expecting. Three big ones:
 
 **(a)** The entire App Store runs over **plain HTTP**. No TLS. No cert validation. No integrity check of any kind. Every device that connects to the App Store is wide open to anyone on the same WiFi, the ISP, DNS anywhere along the path.
 
-**(b)** The device never actually turns off. The screen turns off. The CPU drops to 80 MHz. But the radios -- WiFi, BLE, Sub-GHz, NRF24, IR, RFID -- all stay powered and active. The device stays on the network. It keeps scanning, collecting, transmitting. It just looks dead to the person holding it. There is no code path that truly powers the device down through the menu. Deep Sleep is broken on every board that does not define DEEPSLEEP_WAKEUP_PIN -- which is most of them. DEEPSLEEP_WAKEUP_PIN defaults to -1 across the entire codebase. Users think the device is off. It is not.
+**(b)** The device never actually turns off. The screen turns off. The CPU drops to 80 MHz. But the radios -- WiFi, BLE, Sub-GHz, NRF24, IR, RFID -- all stay powered and active. The device stays on the network. It keeps scanning, collecting, transmitting. It just looks dead to the person holding it. There is no code path that truly powers the device down through the menu. Deep Sleep is broken on every board that does not define DEEPSLEEP_WAKEUP_PIN -- which is most of them. The Reaper board has it set to -1. Users think the device is off. It is not.
 
 **(c)** The JavaScript interpreter is a sandbox in name only. `require()` is just a global property lookup. No whitelist. No permissions. No capability checks. Any JS script including whatever you download from the App Store can read, write, delete any file, hit any network host, transmit on any RF frequency, control GPIO pins.
 
 Someone with network access to one of these devices can silently install a malicious App Store script, grab every stored credential (WiFi passwords, API keys, captured portal creds, credit card numbers, WPA handshakes), and turn the device into a persistent network pivot. All while the user thinks it's asleep.
 
-These findings are about the Bruce firmware ecosystem as a whole, not any single hardware variant. The device I was working on was just the door I walked through.
+These findings are about the Bruce firmware ecosystem as a whole, not the Reaper board specifically. The Reaper was just what I happened to be working on when I found them.
 
 Here's what I found and the road I took to find it.
 
@@ -30,6 +30,7 @@ Bruce firmware is a community project, not a single-developer effort. Here are t
 | Official organization | BruceDevices | github.com/BruceDevices | - |
 | Core contributor, PCB design, CC1101 driver, Launcher developer | Bernardo Morcelli (Pirata) | @bmorcelli | Brazil |
 | App Store infrastructure | Matt Emerick-Law | @emericklaw | UK |
+| Reaper PCB hardware designer | Smoochiee | - | - |
 | Predecessor project (NEMO) founder | Noah Axon (n0xa) | @n0xa | - |
 
 Firmware lineage: n0xa/m5stick-nemo -> pr3y/bruce_old -> pr3y/Bruce -> BruceDevices/firmware (official, 5.8k stars on GitHub).
@@ -223,7 +224,7 @@ Additional risks discovered:
 | Server reliability | Some proxy fetches fail ("Upstream fetch failed"), inconsistent availability |
 ---
 ## The device never turns off
-This affects every board running Bruce firmware. Every single device. The sleep function does not power anything down -- it turns off the display and drops the CPU speed. Thats it. The device stays on the network, keeps scanning, keeps its radios hot. I read through powerSave.cpp and kept thinking... that is not sleep. That is just turning off the monitor.
+This affects every board running Bruce firmware. Not just the Reaper. Every single device. The sleep function does not power anything down -- it turns off the display and drops the CPU speed. Thats it. The device stays on the network, keeps scanning, keeps its radios hot. I read through powerSave.cpp and kept thinking... that is not sleep. That is just turning off the monitor.
 `src/core/powerSave.cpp`, line 32-48:
 ```cpp
 void sleepModeOn() {
@@ -278,7 +279,7 @@ void goToDeepSleep() {
 #endif
 }
 ```
-The board configuration doesn't define `DEEPSLEEP_WAKEUP_PIN`. The default from `include/precompiler_flags.h`:
+The Reaper board's `boards/reaper/pins_arduino.h` doesn't define `DEEPSLEEP_WAKEUP_PIN`. The default from `include/precompiler_flags.h`:
 ```cpp
 #ifndef DEEPSLEEP_WAKEUP_PIN
 #define DEEPSLEEP_WAKEUP_PIN -1
@@ -556,7 +557,7 @@ All of the following are baked into the firmware by default:
 The combination of these findings is worse than any one of them alone.
 A device that never actually turns off + can exfiltrate stored data over the network + receives unverified code from a remote server = a very effective persistent access tool. For whoever controls that server. Or whoever can sit between the device and that server.
 
-This affects every device running Bruce firmware or the bmorcelli launcher. Every user who thinks their device is off is wrong.
+This is not a Reaper board issue. This affects every device running Bruce firmware or the bmorcelli launcher. Every user who thinks their device is off is wrong.
 
 The bmorcelli Launcher shares these same critical flaws: never-off sleep mode, hardcoded default credentials, plaintext credential storage (until v2.7.0), unsigned OTA firmware updates, and a centralized Starred list controlled by a single maintainer.
 This isn't about malice. It could easily be oversight a hobby project that grew faster than its security model. But the architecture has built-in capabilities that look designed for remote code distribution and data collection, and the security controls haven't caught up.
@@ -889,7 +890,7 @@ Firmware Vulnerabilities:
 1. Plain HTTP App Store channel (no TLS, no integrity checks)
 2. NO JavaScript sandbox (require() = global property lookup)
 3. "Sleep" mode keeps all radios active while display off
-4. Deep Sleep broken on all hardware (DEEPSLEEP_WAKEUP_PIN=-1 by default)
+4. Deep Sleep broken on Reaper board (DEEPSLEEP_WAKEUP_PIN=-1)
 
 Supply Chain:
 - 59 apps from 10+ GitHub sources
@@ -1306,7 +1307,7 @@ Phase 3: Payload decrypts and executes
 - Plain HTTP App Store channel with no integrity checks
 - JS interpreter with no sandbox
 - The device never truly powers down -- sleep mode keeps all radios active while display is off. Affects all boards.
-- Deep Sleep broken on all hardware (DEEPSLEEP_WAKEUP_PIN=-1 by default)
+- Deep Sleep broken on Reaper board (DEEPSLEEP_WAKEUP_PIN=-1)
 - GhostStrats LSB matching steganography in all 14 PNGs (encrypted)
 - key_phase2 on JS interpreter icon
 - Server code diverges from public repo

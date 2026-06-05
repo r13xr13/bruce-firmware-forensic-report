@@ -1,6 +1,6 @@
 # Bruce Firmware Forensic Audit
 
-I did not want to have to make this repository. I do not get satisfaction from pointing out flaws in open source projects. But when I started looking into the Bruce firmware looking for a fix for the RF Reaper board, I found that the device never actually turns off the App Store runs over plain HTTP with no integrity checks and the JavaScript interpreter has no sandbox I realized I had to document what I found.
+I did not want to have to make this repository. I do not get satisfaction from pointing out flaws in open source projects. While working on a fix for a hardware variant running Bruce firmware, I found that the device never actually turns off the App Store runs over plain HTTP with no integrity checks and the JavaScript interpreter has no sandbox I realized I had to document what I found.
 
 My name does not matter. What matters is that I stood up for the truth about the Bruce firmware ecosystem and for that I may be seen as a troublemaker. But I cannot stay quiet when I see a device that claims to be off but is actually still on the network collecting data and ready to run arbitrary code from a remote server.
 
