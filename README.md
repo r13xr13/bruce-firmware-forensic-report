@@ -6,7 +6,7 @@ My name does not matter. What matters is that I stood up for the truth about the
 
 This repository contains my forensic audit of the Bruce firmware ecosystem. It covers the Bruce firmware, the bmorcelli launcher, and the App Store infrastructure. It examines security flaws, supply chain risks, and the hidden mechanisms within the GhostStrats theme.
 
-The Bruce firmware source code is included in this repository (in the `bruce-firmware/` directory) so that readers can verify my audit results by examining the actual source code referenced in the reports.
+The Bruce firmware source code is included in this repository (in the [bruce-firmware/](bruce-firmware/) directory) so that readers can verify my audit results by examining the actual source code referenced in the reports.
 
 ---
 
@@ -17,10 +17,10 @@ The Bruce firmware source code is included in this repository (in the `bruce-fir
 | [`FORENSIC_AUDIT.md`](./FORENSIC_AUDIT.md) | Full technical audit — source code analysis, network mapping, remediation |
 | [`BRUCE_STORY.md`](./BRUCE_STORY.md) | Concise narrative walkthrough of the discoveries |
 | [`CVE_MAPPING.md`](./CVE_MAPPING.md) | CVE identifiers & assignment status |
-| **[`TRACEABILITY_MATRIX.md`](./TRACEABILITY_MATRIX.md)** | **<-> Every audit claim → exact source file:line — verify the audit yourself** |
-| [`bruce-firmware/`](./bruce-firmware/) | Bruce firmware source tree (v1.15 from firmware-1.15) |
-| [`external/App-Store/`](./external/App-Store/) | Archived public App Store source (emericklaw/App-Store v0.1.1) |
-| [`external/Bruce-3762afa/`](./external/Bruce-3762afa/) | Archived Bruce fork commit 3762afa5 |
+| **[[TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md)](./TRACEABILITY_MATRIX.md)** | **<-> Every audit claim → exact source file:line — verify the audit yourself** |
+| [[bruce-firmware/](bruce-firmware/)](./bruce-firmware/) | Bruce firmware source tree (v1.15 from firmware-1.15) |
+| [[external/App-Store/](external/App-Store/)](./external/App-Store/) | Archived public App Store source (emericklaw/App-Store v0.1.1) |
+| [[external/Bruce-3762afa/](external/Bruce-3762afa/)](./external/Bruce-3762afa/) | Archived Bruce fork commit 3762afa5 |
 
 ---
 
@@ -31,25 +31,25 @@ The Bruce firmware source code is included in this repository (in the `bruce-fir
 - **`BRUCE_STORY.md`** — the narrative overview
 
 ### 2. Verify each claim using the traceability matrix
-**`TRACEABILITY_MATRIX.md`** maps every audit finding to the exact source file and line number. Each entry has a verification status:
+**[TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md)** maps every audit finding to the exact source file and line number. Each entry has a verification status:
 
 - [V]  **CONFIRMED** — claim matches source code
 - [P]  **NOT VERIFIABLE FROM SOURCE** — requires network probe or binary analysis
 
 ### 3. Read the source directly
-Source is under `bruce-firmware/`. Key files by attack vector:
+Source is under [bruce-firmware/](bruce-firmware/). Key files by attack vector:
 
 | Attack Vector | Key Source Files |
 |---|---|
-| AV-001: HTTP App Store | `bruce-firmware/core/settings.cpp` **(line 1712)** |
-| AV-002: Fake Sleep | `bruce-firmware/core/powerSave.cpp`, `mykeyboard.cpp` **(line 1367–1369)** |
-| AV-003: MJS Sandbox Bypass | `bruce-firmware/modules/bjs_interpreter/globals_js.cpp`, `wifi_js.cpp` |
-| AV-004: Reverse Shell | `bruce-firmware/modules/reverseShell/reverseShell.cpp` **(line 37, 46–50)** |
-| AV-005: Plaintext Credentials | `bruce-firmware/core/config.h` **(line 62)**, `settings.cpp` |
+| AV-001: HTTP App Store | [bruce-firmware/core/settings.cpp](bruce-firmware/core/settings.cpp) **(line 1712)** |
+| AV-002: Fake Sleep | [bruce-firmware/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp), `mykeyboard.cpp` **(line 1367–1369)** |
+| AV-003: MJS Sandbox Bypass | [bruce-firmware/modules/bjs_interpreter/globals_js.cpp](bruce-firmware/modules/bjs_interpreter/globals_js.cpp), `wifi_js.cpp` |
+| AV-004: Reverse Shell | [bruce-firmware/modules/reverseShell/reverseShell.cpp](bruce-firmware/modules/reverseShell/reverseShell.cpp) **(line 37, 46–50)** |
+| AV-005: Plaintext Credentials | [bruce-firmware/core/config.h](bruce-firmware/core/config.h) **(line 62)**, `settings.cpp` |
 
 ### 4. Check the external evidence archives
-- `external/App-Store/` — the public App Store repo (for comparing against live server behavior)
-- `external/Bruce-3762afa/` — a fork for divergence analysis
+- [external/App-Store/](external/App-Store/) — the public App Store repo (for comparing against live server behavior)
+- [external/Bruce-3762afa/](external/Bruce-3762afa/) — a fork for divergence analysis
 
 ---
 

