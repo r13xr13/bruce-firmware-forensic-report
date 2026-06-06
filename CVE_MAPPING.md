@@ -74,20 +74,26 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 | CWE-829 | Inclusion of Functionality from Untrusted Control Sphere | Server runs unpublished v2 with board detection, commit-hash downloads, self-labeling as `BruceDevices/App-Store` (no such repo exists). Public repo frozen at v0.1.1 since Nov 2025. | Users audit public code but run different code. Maintainer has no visibility into production server behavior. | No existing CVE - Request assignment |
 | CWE-922 | Insecure Storage of Sensitive Information | Server self-identifies as official BruceDevices org but source is personal account. No code review process for server changes. | Trust confusion - devices trust "official" source that doesn't exist publicly. | No existing CVE - Request assignment |
 
-## CVE Request Recommendations
+## CVE Request Submissions
+
+To obtain CVE IDs, submit each request to
+[MITRE's CNA of Last Resort (CNA-LR)](https://mitre.github.io/mitre-cve-roles/cve-id-request/).
+Pre-filled submission templates with CVSS scores are in
+[`CVE_REQUEST.md`](./CVE_REQUEST.md).
+
+See detailed instructions: [`CVE_REQUEST.md`](./CVE_REQUEST.md) -- How to Submit section.
 
 Based on the analysis, the following CVE assignments should be requested:
 
-| CVE Request | Attack Vectors Covered | Priority |
+| CVE Request | Attack Vectors Covered | Priority | CVSS |
 |-------------|------------------------|----------|
-| CVE-2026-XXXX | AV-001: HTTP App Store delivery (CWE-319, CWE-345, CWE-494) | Critical |
-| CVE-2026-XXXX | AV-002: Fake sleep on ALL hardware (CWE-276, CWE-921) | Critical |
-| CVE-2026-XXXX | AV-003: MJS sandbox bypass (CWE-269, CWE-284, CWE-94) | Critical |
-| CVE-2026-XXXX | AV-004: Built-in reverse shell (CWE-287, CWE-306, CWE-798) | High |
-| CVE-2026-XXXX | AV-005: Plaintext credential storage (CWE-256, CWE-312) | High |
-| CVE-2026-XXXX | AV-006: Supply chain compromise (CWE-829, CWE-494) | Critical |
-| CVE-2026-XXXX | AV-007: GhostStrats steganography (CWE-506, CWE-656) | Medium |
-| CVE-2026-XXXX | AV-008: Server divergence (CWE-829, CWE-922) | High |
+| CVE-2026-XXXX-1 | AV-001 + AV-003: App Store RCE chain | Critical | 9.8 |
+| CVE-2026-XXXX-2 | AV-002: Fake sleep on ALL hardware | High | 7.6 |
+| CVE-2026-XXXX-3 | AV-004: Built-in reverse shell | High | 8.8 |
+| CVE-2026-XXXX-4 | AV-005: Plaintext credential storage | High | 8.1 |
+| CVE-2026-XXXX-5 | AV-006: Supply chain compromise | Critical | 9.6 |
+| CVE-2026-XXXX-6 | AV-007: GhostStrats steganography | High | 7.5 |
+| CVE-2026-XXXX-7 | AV-008: Server divergence | Critical | 9.1 |
 
 ## Evidence References
 
