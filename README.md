@@ -31,7 +31,7 @@ file and line number so you can verify the audit yourself.
 |                             |     |  ghp.iceis.co.uk             |
 |  [AV-001] HTTP fetch -------+---->+  /service/appstore/          |
 |  [AV-003] MJS interp eval   |     |                              |
-|  [AV-002] Fake sleep radios |    |  Public: v0.1.1 (754 lines)  |
+|  [AV-002] Fake sleep radios |     |  Public: v0.1.1 (754 lines)  |
 |  [AV-004] Reverse shell AP  |     |  Live:   v2   (2 lines, min) |
 |  [AV-005] Cleartext creds   |     |  [AV-007] Server divergence  |
 |                             |     |  [AV-008] C2 infra?          |
