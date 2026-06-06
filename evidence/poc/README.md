@@ -1,16 +1,16 @@
 # Proof-of-Concept: Bruce Firmware Attack Chain
 
 This directory contains working demonstrations of the attack chain described in
-`FORENSIC_AUDIT.md` — combining **AV-001 (plain HTTP App Store)** with
+[`FORENSIC_AUDIT.md`](../../FORENSIC_AUDIT.md) — combining **AV-001 (plain HTTP App Store)** with
 **AV-003 (MJS sandbox bypass)**.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `poc-mitm-proxy.js` | Node.js MITM proxy that intercepts App Store HTTP requests and injects a malicious payload |
-| `poc-malicious-payload.js` | Example malicious MJS payload that exfiltrates credentials and gains persistence |
-| `poc-sandbox-bypass.js` | Standalone Node.js script that simulates the MJS `require()` vulnerability |
+| [`poc-mitm-proxy.js`](poc-mitm-proxy.js) | Node.js MITM proxy that intercepts App Store HTTP requests and injects a malicious payload |
+| [`poc-malicious-payload.js`](poc-malicious-payload.js) | Example malicious MJS payload that exfiltrates credentials and gains persistence |
+| [`poc-sandbox-bypass.js`](poc-sandbox-bypass.js) | Standalone Node.js script that simulates the MJS `require()` vulnerability |
 
 ## How It Works
 
@@ -65,9 +65,9 @@ To demonstrate this against an actual Bruce device:
 
 2. **AV-003 (Sandbox Bypass)**: The MJS `require()` function in `globals_js.cpp` performs
    a simple global property lookup with no whitelist, no permission check, no sandbox
-   of any kind. See `TRACEABILITY_MATRIX.md` for exact source lines.
+   of any kind. See [`TRACEABILITY_MATRIX.md`](../../TRACEABILITY_MATRIX.md) for exact source lines.
 
 ## Source References
 
-- AV-001: `bruce-firmware/core/settings.cpp:1712`
-- AV-003: `bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56`
+- AV-001: [bruce-firmware/core/settings.cpp:1712](bruce-firmware/core/settings.cpp#L1712)
+- AV-003: [bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56](bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L28-L56)
