@@ -42,10 +42,10 @@ Source is under [bruce-firmware/](bruce-firmware/). Key files by attack vector:
 | Attack Vector | Key Source Files |
 |---|---|
 | AV-001: HTTP App Store | [bruce-firmware/core/settings.cpp](bruce-firmware/core/settings.cpp) **(line 1712)** |
-| AV-002: Fake Sleep | [bruce-firmware/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp), `mykeyboard.cpp` **(line 1367–1369)** |
-| AV-003: MJS Sandbox Bypass | [bruce-firmware/modules/bjs_interpreter/globals_js.cpp](bruce-firmware/modules/bjs_interpreter/globals_js.cpp), `wifi_js.cpp` |
+| AV-002: Fake Sleep | [bruce-firmware/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp), [mykeyboard.cpp](bruce-firmware/core/mykeyboard.cpp) **(line 1367–1369)** |
+| AV-003: MJS Sandbox Bypass | [bruce-firmware/modules/bjs_interpreter/globals_js.cpp](bruce-firmware/modules/bjs_interpreter/globals_js.cpp), [wifi_js.cpp](bruce-firmware/modules/bjs_interpreter/wifi_js.cpp) |
 | AV-004: Reverse Shell | [bruce-firmware/modules/reverseShell/reverseShell.cpp](bruce-firmware/modules/reverseShell/reverseShell.cpp) **(line 37, 46–50)** |
-| AV-005: Plaintext Credentials | [bruce-firmware/core/config.h](bruce-firmware/core/config.h) **(line 62)**, `settings.cpp` |
+| AV-005: Plaintext Credentials | [bruce-firmware/core/config.h](bruce-firmware/core/config.h) **(line 62)**, [settings.cpp](bruce-firmware/core/settings.cpp) |
 
 ### 4. Check the external evidence archives
 - [external/App-Store/](external/App-Store/) — the public App Store repo (for comparing against live server behavior)
