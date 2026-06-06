@@ -100,19 +100,6 @@ All evidence is documented in:
 - [`external/App-Store/`](external/App-Store/) - Archived emericklaw/App-Store public repo (v0.1.1, full git history)
 - [`external/Bruce-3762afa/`](external/Bruce-3762afa/) - Archived emericklaw/Bruce@3762afa5cfda7a68e9ff7223a4dbfa9077927e29
 
-## Local CVE JSON Archive
-
-All 7 CVE submission JSON files are saved locally:
-
-| CAN ID | File |
-|--------|------|
-| CAN-2026-2031279 | `/home/c0smic/Music/CAN-2026-2031279.json` |
-| CAN-2026-2031281 | `/home/c0smic/Music/CAN-2026-2031281.json` |
-| CAN-2026-2031282 | `/home/c0smic/Music/CAN-2026-2031282.json` |
-| CAN-2026-2031283 | `/home/c0smic/Music/CAN-2026-2031283.json` |
-| CAN-2026-2031284 | `/home/c0smic/Music/CAN-2026-2031284.json` |
-| CAN-2026-2031285 | `/home/c0smic/Music/CAN-2026-2031285.json` |
-| CAN-2026-2031286 | `/home/c0smic/Music/CAN-2026-2031286.json` |
 
 ## Notes
 
