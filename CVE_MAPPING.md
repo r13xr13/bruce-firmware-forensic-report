@@ -6,7 +6,7 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 ## Attack Vectors and CWE Mapping
 
 ### AV-001: HTTP App Store Delivery (No TLS, No Integrity)
-**Location:** `src/core/settings.cpp:1688` - `http.begin("http://ghp.iceis.co.uk/service/appstore/")`
+**Location:** [src/core/settings.cpp:1688](bruce-firmware/core/settings.cpp#L1688) - `http.begin("http://ghp.iceis.co.uk/service/appstore/")`
 **Public Repo:** emericklaw/App-Store - `App Store.js` lines 18-19
 
 | CWE ID | Name | Description | Impact | CVE Status |
@@ -16,7 +16,7 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 | CWE-494 | Download of Code Without Integrity Check | App Store downloads and executes JavaScript/MJS code from HTTP endpoints. No cryptographic signatures, no hash verification, no trusted root of trust. | Remote code execution on all Bruce devices. Attacker can push arbitrary code via compromised App Store server or MITM. | No existing CVE - Request assignment |
 
 ### AV-002: Fake Sleep / Radios Always On (ALL Hardware)
-**Location:** `src/core/powerSave.cpp` - `sleepModeOn()`, `src/core/mykeyboard.cpp` - `goToDeepSleep()`
+**Location:** [src/core/powerSave.cpp](bruce-firmware/core/powerSave.cpp) - `sleepModeOn()`, [src/core/mykeyboard.cpp](bruce-firmware/core/mykeyboard.cpp) - `goToDeepSleep()`
 **Affects:** ALL boards running Bruce firmware or bmorcelli launcher - not just Reaper
 
 | CWE ID | Name | Description | Impact | CVE Status |
@@ -25,7 +25,7 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 | CWE-921 | Storage of Sensitive Information in Mechanism without Access Control | During fake sleep, device continues to process WiFi/BLE/RF traffic with no authentication. Network credentials, captured data remain accessible via active radios. | Persistent attack surface during user-perceived 'off' state. Credentials in bruce.conf accessible via active WiFi/BLE. | No existing CVE - Request assignment |
 
 ### AV-003: MJS Interpreter Sandbox Bypass (require = Global Lookup)
-**Location:** `src/modules/bjs_interpreter/globals_js.cpp:298-309` - `native_require()`
+**Location:** [src/modules/bjs_interpreter/globals_js.cpp:298-309](bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L298-L309) - `native_require()`
 
 | CWE ID | Name | Description | Impact | CVE Status |
 |--------|------|-------------|--------|------------|
@@ -34,7 +34,7 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 | CWE-94 | Improper Control of Generation of Code (Code Injection) | App Store downloads and executes arbitrary JavaScript. MJS interpreter evaluates code with full privileges. No code signing or execution policy. | Arbitrary code execution via App Store. Malicious app/theme = full device control. | No existing CVE - Request assignment |
 
 ### AV-004: Built-in Reverse Shell (BruceShell AP + TCP/23 + Web UI)
-**Location:** `src/modules/reverseShell/reverseShell.cpp`
+**Location:** [src/modules/reverseShell/reverseShell.cpp](bruce-firmware/modules/reverseShell/reverseShell.cpp)
 
 | CWE ID | Name | Description | Impact | CVE Status |
 |--------|------|-------------|--------|------------|
@@ -43,7 +43,7 @@ This document maps each identified attack vector in the Bruce firmware ecosystem
 | CWE-798 | Use of Hard-coded Credentials | Default AP name "BruceShell", default web UI accessible without credentials. | Predictable attack surface across all deployed devices. | No existing CVE - Request assignment |
 
 ### AV-005: Plaintext Credential Storage (/bruce.conf)
-**Location:** `src/core/settings.cpp`, `src/modules/bjs_interpreter/storage_js.cpp`
+**Location:** [src/core/settings.cpp](bruce-firmware/core/settings.cpp), [src/modules/bjs_interpreter/storage_js.cpp](bruce-firmware/modules/bjs_interpreter/storage_js.cpp)
 
 | CWE ID | Name | Description | Impact | CVE Status |
 |--------|------|-------------|--------|------------|
@@ -92,10 +92,10 @@ Based on the analysis, the following CVE assignments should be requested:
 ## Evidence References
 
 All evidence is documented in:
-- `FORENSIC_AUDIT.md` - Full technical audit with source code references
-- `BRUCE_STORY.md` - Narrative walkthrough of discovery process
-- `external/App-Store/` - Archived emericklaw/App-Store public repo (v0.1.1)
-- `external/Bruce-3762afa/` - Archived emericklaw/Bruce@3762afa5cfda7a68e9ff7223a4dbfa9077927e29
+- [`FORENSIC_AUDIT.md`](./FORENSIC_AUDIT.md) - Full technical audit with source code references
+- [`BRUCE_STORY.md`](./BRUCE_STORY.md) - Narrative walkthrough of discovery process
+- [`external/App-Store/`](external/App-Store/) - Archived emericklaw/App-Store public repo (v0.1.1)
+- [`external/Bruce-3762afa/`](external/Bruce-3762afa/) - Archived emericklaw/Bruce@3762afa5cfda7a68e9ff7223a4dbfa9077927e29
 
 ## Notes
 

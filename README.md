@@ -27,8 +27,8 @@ The Bruce firmware source code is included in this repository (in the [bruce-fir
 ## How to Use This Repo
 
 ### 1. Start with the reports
-- **`FORENSIC_AUDIT.md`** — all the technical detail
-- **`BRUCE_STORY.md`** — the narrative overview
+- **[`FORENSIC_AUDIT.md`](./FORENSIC_AUDIT.md)** — all the technical detail
+- **[`BRUCE_STORY.md`](./BRUCE_STORY.md)** — the narrative overview
 
 ### 2. Verify each claim using the traceability matrix
 **[TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md)** maps every audit finding to the exact source file and line number. Each entry has a verification status:

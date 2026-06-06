@@ -5,8 +5,8 @@
 ---
 
 >  **Source Navigation**
-> This report references source files with the path prefix `src/` (e.g., [src/core/settings.cpp](bruce-firmware/core/settings.cpp)).
-> **In this repository, those files live under `bruce-firmware/`** (e.g., [bruce-firmware/core/settings.cpp](bruce-firmware/core/settings.cpp)).
+> This report references source files with the path prefix [`src/`](bruce-firmware/) (e.g., [src/core/settings.cpp](bruce-firmware/core/settings.cpp)).
+> **In this repository, those files live under [`bruce-firmware/`](bruce-firmware/)** (e.g., [bruce-firmware/core/settings.cpp](bruce-firmware/core/settings.cpp)).
 > The line numbers in the original report may differ slightly from the actual source due to formatting/whitespace changes.
 > For exact file:line mappings, see [`TRACEABILITY_MATRIX.md`](./TRACEABILITY_MATRIX.md).
 > 
