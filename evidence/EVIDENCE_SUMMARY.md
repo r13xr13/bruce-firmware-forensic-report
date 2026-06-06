@@ -8,7 +8,7 @@
 
 ## 1. Server Divergence (AV-007)
 
-| Metric | Public Repo ([external/App-Store/](external/App-Store/)) | Live Server (`ghp.iceis.co.uk`) |
+| Metric | Public Repo ([external/App-Store/](../external/App-Store/)) | Live Server (`ghp.iceis.co.uk`) |
 |--------|--------------------------------------|----------------------------------|
 | Tagged version | v0.1.1 | v2 (unversioned, self-identifies as v1.0.1) |
 | Size | 24,595 bytes (754 lines) | 10,821 bytes (2 lines, minified) |
@@ -31,7 +31,7 @@
 | CDN | Cloudflare | `Server: cloudflare` header |
 | Backend | Express.js | `X-Powered-By: Express` header |
 | HTTPS available | [V]  HTTP/2 200 on port 443 | `https://ghp.iceis.co.uk/service/appstore/` |
-| Firmware uses HTTPS | [X]  No — uses `http://` | [bruce-firmware/core/settings.cpp:1712](bruce-firmware/core/settings.cpp#L1712) |
+| Firmware uses HTTPS | [X]  No — uses `http://` | [bruce-firmware/core/settings.cpp:1712](../bruce-firmware/core/settings.cpp#L1712) |
 | Cache status | `DYNAMIC` (Cloudflare) | `cf-cache-status: DYNAMIC` header |
 | ETag | `W/"2a45-lzBrCZej81kCmpLl7AIiSBEYE4E"` | Response header |
 
@@ -50,13 +50,13 @@
 
 | File | Source | Size |
 |------|--------|------|
-| [appstore-v2-minified.js](evidence/live-probes/appstore-v2-minified.js) | `GET /service/appstore/` | 10,821 bytes |
-| [categories.json](evidence/live-probes/categories.json) | `GET /service/main/releases/categories.json` | 948 bytes |
-| [category-tools.json](evidence/live-probes/category-tools.json) | `GET /service/main/releases/category-tools.min.json` | — |
-| [category-wifi.json](evidence/live-probes/category-wifi.json) | `GET /service/main/releases/category-wifi.min.json` | — |
-| [category-themes.json](evidence/live-probes/category-themes.json) | `GET /service/main/releases/category-themes.min.json` | — |
-| [response-headers.txt](evidence/live-probes/response-headers.txt) | `HEAD /service/appstore/` | 20 lines |
-| [dns-resolution.txt](evidence/live-probes/dns-resolution.txt) | `dig ghp.iceis.co.uk` | 2 IPs |
+| [appstore-v2-minified.js](live-probes/appstore-v2-minified.js) | `GET /service/appstore/` | 10,821 bytes |
+| [categories.json](live-probes/categories.json) | `GET /service/main/releases/categories.json` | 948 bytes |
+| [category-tools.json](live-probes/category-tools.json) | `GET /service/main/releases/category-tools.min.json` | — |
+| [category-wifi.json](live-probes/category-wifi.json) | `GET /service/main/releases/category-wifi.min.json` | — |
+| [category-themes.json](live-probes/category-themes.json) | `GET /service/main/releases/category-themes.min.json` | — |
+| [response-headers.txt](live-probes/response-headers.txt) | `HEAD /service/appstore/` | 20 lines |
+| [dns-resolution.txt](live-probes/dns-resolution.txt) | `dig ghp.iceis.co.uk` | 2 IPs |
 
 ---
 

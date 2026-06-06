@@ -69,5 +69,5 @@ To demonstrate this against an actual Bruce device:
 
 ## Source References
 
-- AV-001: [bruce-firmware/core/settings.cpp:1712](bruce-firmware/core/settings.cpp#L1712)
-- AV-003: [bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56](bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L28-L56)
+- AV-001: [bruce-firmware/core/settings.cpp:1712](../../bruce-firmware/core/settings.cpp#L1712)
+- AV-003: [bruce-firmware/modules/bjs_interpreter/globals_js.cpp:28-56](../../bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L28-L56)
