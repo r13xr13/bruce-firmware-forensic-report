@@ -1,0 +1,59 @@
+================================================================
+  Exploit-DB Submission Instructions
+  Bruce ESP32 Firmware - 2 PoC Submissions
+================================================================
+
+EMAIL TO: submit [at] offsec [dot] com
+
+Send TWO separate emails (1 exploit per email).
+
+----------------------------------------------------------------
+SUBMISSION 1: Sandbox Bypass
+----------------------------------------------------------------
+
+Subject: Bruce ESP32 Firmware MJS Interpreter Sandbox Bypass
+
+Attachment: EDB-sandbox-bypass.js
+
+Body (paste this):
+
+This is a proof-of-concept demonstrating the MJS interpreter
+sandbox bypass in Bruce ESP32 firmware (CVE-2026-2031279).
+
+The native_require() function in modules/bjs_interpreter/globals_js.cpp
+lines 28-56 performs a simple global property lookup with zero
+permission checks. Any script downloaded from the App Store (via
+plain HTTP, no TLS) can access filesystem, WiFi, BLE, Sub-GHz RF,
+BadUSB, and GPIO with full privileges.
+
+To run: node EDB-sandbox-bypass.js
+
+Full report: https://github.com/r13xr13/bruce-firmware-forensic-report
+
+----------------------------------------------------------------
+SUBMISSION 2: MITM App Store Injector
+----------------------------------------------------------------
+
+Subject: Bruce ESP32 Firmware MITM App Store Injector
+
+Attachment: EDB-mitm-proxy.js
+
+Body (paste this):
+
+This is a proof-of-concept MITM proxy that intercepts Bruce
+firmware App Store HTTP requests and injects a malicious payload
+(CVE-2026-2031279).
+
+The firmware uses plain HTTP (settings.cpp:1712) with no TLS,
+no certificate verification, no integrity checks. Combined with
+the MJS sandbox bypass, an attacker on the same network can
+compromise any Bruce device that refreshes the App Store.
+
+Usage: node EDB-mitm-proxy.js
+Test: curl -x http://localhost:8080 http://ghp.iceis.co.uk/service/appstore/
+
+Full report: https://github.com/r13xr13/bruce-firmware-forensic-report
+
+================================================================
+Files are in: evidence/poc/
+================================================================

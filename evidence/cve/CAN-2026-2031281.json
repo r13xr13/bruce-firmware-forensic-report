@@ -1,0 +1,161 @@
+{
+    "containers": {
+        "cna": {
+            "affected": [
+                {
+                    "defaultStatus": "unaffected",
+                    "platforms": [
+                        "ESP32"
+                    ],
+                    "product": "Bruce firmware",
+                    "programFiles": [
+                        "core/powerSave.cpp",
+                        "core/mykeyboard.cpp"
+                    ],
+                    "programRoutines": [
+                        {
+                            "name": "sleepModeOn()"
+                        },
+                        {
+                            "name": "goToDeepSleep()"
+                        }
+                    ],
+                    "vendor": "BruceDevices",
+                    "versions": [
+                        {
+                            "status": "affected",
+                            "version": "1.0.0",
+                            "versionType": "custom"
+                        },
+                        {
+                            "status": "affected",
+                            "version": "1.15.0",
+                            "versionType": "custom"
+                        }
+                    ],
+                    "x_CopyOfCNAUnderAffected": "IN-CNA-LR-SCOPE"
+                }
+            ],
+            "credits": [
+                {
+                    "lang": "en",
+                    "type": "analyst",
+                    "value": "Heavy Butter"
+                }
+            ],
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "supportingMedia": [
+                        {
+                            "base64": false,
+                            "type": "text/html",
+                            "value": "Bruce firmware enters a fake sleep state where the display turns off but WiFi BLE CC1101 and NRF24 radios remain active. No user indication the device is still transmitting. Affects ALL boards running Bruce firmware or bmorcelli launcher not just specific hardware variants."
+                        }
+                    ],
+                    "value": "Bruce firmware enters a fake sleep state where the display turns off but WiFi BLE CC1101 and NRF24 radios remain active. No user indication the device is still transmitting. Affects ALL boards running Bruce firmware or bmorcelli launcher not just specific hardware variants."
+                }
+            ],
+            "metrics": [
+                {
+                    "cvssV4_0": {
+                        "Automatable": "NOT_DEFINED",
+                        "Recovery": "NOT_DEFINED",
+                        "Safety": "NOT_DEFINED",
+                        "attackComplexity": "LOW",
+                        "attackRequirements": "NONE",
+                        "attackVector": "ADJACENT",
+                        "baseScore": 7.1,
+                        "baseSeverity": "HIGH",
+                        "privilegesRequired": "NONE",
+                        "providerUrgency": "NOT_DEFINED",
+                        "subAvailabilityImpact": "NONE",
+                        "subConfidentialityImpact": "NONE",
+                        "subIntegrityImpact": "NONE",
+                        "userInteraction": "NONE",
+                        "valueDensity": "NOT_DEFINED",
+                        "vectorString": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N",
+                        "version": "4.0",
+                        "vulnAvailabilityImpact": "NONE",
+                        "vulnConfidentialityImpact": "HIGH",
+                        "vulnIntegrityImpact": "LOW",
+                        "vulnerabilityResponseEffort": "NOT_DEFINED"
+                    },
+                    "format": "CVSS",
+                    "scenarios": [
+                        {
+                            "lang": "en",
+                            "value": "GENERAL"
+                        }
+                    ]
+                }
+            ],
+            "problemTypes": [
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-276",
+                            "description": "Incorrect Default Permissions",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-921",
+                            "description": "Storage of Sensitive Information in Mechanism without Access Control",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                }
+            ],
+            "providerMetadata": {
+                "orgId": "efd32b81-8845-445a-ac72-9bd3173d4312"
+            },
+            "references": [
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/powerSave.cpp"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/mykeyboard.cpp#L1367-L1369"
+                }
+            ],
+            "source": {
+                "discovery": "EXTERNAL"
+            },
+            "x_Other_CNA": {
+                "x_CNA_Contact": "IN-CNA-LR-SCOPE"
+            },
+            "x_Read_Landing": {
+                "x_Acknowledge": "YES"
+            },
+            "x_Request_Type": {
+                "x_Publication_Request": "YES"
+            },
+            "x_generator": {
+                "engine": "CVE-Request-form 0.0.1"
+            },
+            "x_theConversation": [
+                {
+                    "authorRole": "CNA-LR",
+                    "visibility": "public"
+                }
+            ]
+        }
+    },
+    "cveMetadata": {
+        "assignerOrgId": "efd32b81-8845-445a-ac72-9bd3173d4312",
+        "cveId": "CAN-2026-2031281",
+        "requesterUserId": "00000000-0000-4000-9000-000000000000",
+        "serial": 1,
+        "state": "PUBLISHED"
+    },
+    "dataType": "CVE_RECORD",
+    "dataVersion": "5.2"
+}

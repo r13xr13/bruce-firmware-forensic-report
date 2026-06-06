@@ -1,0 +1,141 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.2",
+  "cveMetadata": {
+    "cveId": "CAN-2026-2031286",
+    "assignerOrgId": "efd32b81-8845-445a-ac72-9bd3173d4312",
+    "requesterUserId": "00000000-0000-4000-9000-000000000000",
+    "serial": 1,
+    "state": "PUBLISHED"
+  },
+  "containers": {
+    "cna": {
+      "x_theConversation": [
+        {
+          "authorRole": "CNA-LR",
+          "visibility": "public"
+        }
+      ],
+      "x_Read_Landing": {
+        "x_Acknowledge": "YES"
+      },
+      "x_Other_CNA": {
+        "x_CNA_Contact": "IN-CNA-LR-SCOPE"
+      },
+      "x_Request_Type": {
+        "x_Publication_Request": "YES"
+      },
+      "providerMetadata": {
+        "orgId": "efd32b81-8845-445a-ac72-9bd3173d4312"
+      },
+      "problemTypes": [
+        {
+          "descriptions": [
+            {
+              "lang": "en",
+              "description": "Inclusion of Functionality from Untrusted Control Sphere",
+              "type": "CWE",
+              "cweId": "CWE-829"
+            }
+          ]
+        },
+        {
+          "descriptions": [
+            {
+              "lang": "en",
+              "description": "Insecure Storage of Sensitive Information",
+              "type": "CWE",
+              "cweId": "CWE-922"
+            }
+          ]
+        }
+      ],
+      "affected": [
+        {
+          "x_CopyOfCNAUnderAffected": "IN-CNA-LR-SCOPE",
+          "vendor": "emericklaw",
+          "product": "Bruce App Store server",
+          "versions": [
+            {
+              "status": "affected",
+              "version": "0.1.1",
+              "versionType": "custom"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "Bruce App Store server at ghp.iceis.co.uk runs unpublished v2 code diverging from public emericklaw/App-Store v0.1.1 frozen since November 2025. Live server delivers minified JS with board detection commit-hash downloads and self-identification as non-existent BruceDevices/App-Store organization.",
+          "supportingMedia": [
+            {
+              "type": "text/html",
+              "base64": false,
+              "value": "Bruce App Store server at ghp.iceis.co.uk runs unpublished v2 code diverging from public emericklaw/App-Store v0.1.1 frozen since November 2025. Live server delivers minified JS with board detection commit-hash downloads and self-identification as non-existent BruceDevices/App-Store organization."
+            }
+          ]
+        }
+      ],
+      "references": [
+        {
+          "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/EVIDENCE_SUMMARY.md"
+        },
+        {
+          "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/live-probes/appstore-v2-minified.js"
+        },
+        {
+          "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/live-probes/response-headers.txt"
+        }
+      ],
+      "metrics": [
+        {
+          "format": "CVSS",
+          "scenarios": [
+            {
+              "lang": "en",
+              "value": "GENERAL"
+            }
+          ],
+          "cvssV4_0": {
+            "version": "4.0",
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "attackRequirements": "NONE",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "vulnConfidentialityImpact": "HIGH",
+            "subConfidentialityImpact": "NONE",
+            "vulnIntegrityImpact": "HIGH",
+            "subIntegrityImpact": "NONE",
+            "vulnAvailabilityImpact": "NONE",
+            "subAvailabilityImpact": "NONE",
+            "baseSeverity": "CRITICAL",
+            "baseScore": 9.1,
+            "Safety": "NOT_DEFINED",
+            "Automatable": "NOT_DEFINED",
+            "Recovery": "NOT_DEFINED",
+            "valueDensity": "NOT_DEFINED",
+            "vulnerabilityResponseEffort": "NOT_DEFINED",
+            "providerUrgency": "NOT_DEFINED",
+            "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N"
+          }
+        }
+      ],
+      "credits": [
+        {
+          "lang": "en",
+          "value": "Heavy Butter",
+          "type": "finder"
+        }
+      ],
+      "source": {
+        "discovery": "EXTERNAL"
+      },
+      "x_generator": {
+        "engine": "CVE-Request-form 0.0.1"
+      }
+    }
+  }
+}

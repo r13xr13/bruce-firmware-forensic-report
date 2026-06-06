@@ -1,26 +1,31 @@
-# CVE Request Preparation
+# CVE Request Submissions
 
-This document contains pre-filled submission data for requesting CVE IDs from
-[MITRE's CNA of Last Resort (CNA-LR)](https://mitre.github.io/mitre-cve-roles/cve-id-request/)
-for each vulnerability discovered in the Bruce firmware ecosystem.
+This document records the CVE submission process for all vulnerabilities
+discovered in the Bruce firmware ecosystem. All 7 CANs have been submitted
+to MITRE's CNA of Last Resort (CNA-LR). The submission JSON files are
+archived in this repo at [evidence/cve/](evidence/cve/).
 
-## How to Submit
+## Summary of Actions Taken
 
-1. Go to <https://mitre.github.io/mitre-cve-roles/cve-id-request/>
-2. Click "Login with Google" (lower-left corner)
-3. Click "Reserve One CAN" button
-4. Fill in the details from the template below for each CVE
-5. Click "Submit Request"
-6. Wait for acceptance email (typically 1-7 days)
-7. Update the CVE ID in [CVE_MAPPING.md](./CVE_MAPPING.md)
-
-> You do NOT need to be the maintainer of the affected project to request a CVE.
-> MITRE's CNA-LR handles vulnerabilities in products where the vendor is not their
-> own CNA. Both BruceDevices/firmware and emericklaw/App-Store are eligible.
+| Step | Status |
+|------|--------|
+| Pre-filled JSON templates for all 7 CVEs | Done |
+| Submitted CAN-2026-2031279 (App Store RCE Chain) | Done |
+| Submitted CAN-2026-2031281 (Fake Sleep) | Done |
+| Submitted CAN-2026-2031282 (Reverse Shell) | Done |
+| Submitted CAN-2026-2031283 (Plaintext Credentials) | Done |
+| Submitted CAN-2026-2031284 (Supply Chain) | Done |
+| Submitted CAN-2026-2031285 (GhostStrats Steganography) | Done |
+| Submitted CAN-2026-2031286 (Server Divergence) | Done |
+| Submitted PoC to Exploit-DB (Sandbox Bypass) | Done |
+| Submitted PoC to Exploit-DB (MITM Injector) | Done |
+| Published GitHub Security Advisories (GHSA 7 advisories) | Done |
+| Wait for MITRE acceptance (1-7 days per CVE) | Pending |
+| Update CVE_MAPPING.md with assigned CVE IDs | Pending |
 
 ---
 
-## CVE-2026-XXXX-1: App Store RCE Chain
+## CVE-2026-2031279: App Store RCE Chain
 
 ### Request
 | Field | Value |
@@ -50,21 +55,28 @@ credit card data (RFID scans), WPA handshakes, and persist via the reverse
 shell or by writing to the device filesystem.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md
 
 Source files:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp#L1712>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp#L1712
   (HTTP fetch URL, no TLS)
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L298-L309>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L298-L309
   (require() as global namespace lookup, sandbox bypass)
 
 ### CVSS 3.1
 **Score: 9.8 (Critical)**
 Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031279.json](evidence/cve/CAN-2026-2031279.json)
+
+### PoC Submissions
+- Exploit-DB: Bruce ESP32 Firmware MJS Interpreter Sandbox Bypass (EDB-sandbox-bypass.js)
+- Exploit-DB: Bruce ESP32 Firmware MITM App Store Injector (EDB-mitm-proxy.js)
+
 ---
 
-## CVE-2026-XXXX-2: Fake Sleep / Radios Always On
+## CVE-2026-2031281: Fake Sleep / Radios Always On
 
 ### Request
 | Field | Value |
@@ -89,21 +101,24 @@ user-perceived "off" state. Credentials in bruce.conf remain accessible via
 active WiFi/BLE interfaces.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md
 
 Source files:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/powerSave.cpp>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/powerSave.cpp
   (sleepModeOn() implementation)
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/mykeyboard.cpp#L1367-L1369>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/mykeyboard.cpp#L1367-L1369
   (goToDeepSleep() -- deep sleep pin undefined by default)
 
 ### CVSS 3.1
 **Score: 7.6 (High)**
 Vector: AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031281.json](evidence/cve/CAN-2026-2031281.json)
+
 ---
 
-## CVE-2026-XXXX-3: Built-in Reverse Shell (BruceShell AP)
+## CVE-2026-2031282: Built-in Reverse Shell (BruceShell AP)
 
 ### Request
 | Field | Value |
@@ -128,19 +143,22 @@ data exfiltration, and potential lateral movement into networks that trust
 the device.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md
 
 Source file:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/reverseShell/reverseShell.cpp>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/reverseShell/reverseShell.cpp
   (full reverse shell implementation)
 
 ### CVSS 3.1
 **Score: 8.8 (High)**
 Vector: AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031282.json](evidence/cve/CAN-2026-2031282.json)
+
 ---
 
-## CVE-2026-XXXX-4: Plaintext Credential Storage
+## CVE-2026-2031283: Plaintext Credential Storage
 
 ### Request
 | Field | Value |
@@ -164,23 +182,26 @@ WiFi network credentials, API keys, and device configuration. Network
 pivoting, credential reuse attacks, and persistent access are possible.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md
 
 Source files:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/config.h#L62>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/config.h#L62
   (configuration file definition)
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp
   (settings read/write routines)
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/storage_js.cpp>
+- https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/storage_js.cpp
   (MJS storage module -- full filesystem access)
 
 ### CVSS 3.1
 **Score: 8.1 (High)**
 Vector: AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031283.json](evidence/cve/CAN-2026-2031283.json)
+
 ---
 
-## CVE-2026-XXXX-5: Supply Chain Compromise
+## CVE-2026-2031284: Supply Chain Compromise
 
 ### Request
 | Field | Value |
@@ -197,28 +218,27 @@ build validation. The App Store server fetches code from upstream repos and
 serves it to devices over HTTP with no integrity checks. Any compromised
 upstream repository, account takeover, or supply chain attack against any of
 the 10+ source repos results in arbitrary code execution on all downstream
-Bruce devices. The current catalog includes apps maintained by the hardware
-vendor (BruceDevices/firmware), the App Store author (emericklaw), and
-multiple community contributors with varying security postures and review
-processes.
+Bruce devices.
 
 ### Impact
 Single upstream compromise delivers malicious JavaScript to the entire fleet
 of deployed Bruce devices. No mechanism exists for users to verify the
-authenticity or integrity of downloaded code. Server-side substitution
-(adding/modifying/removing apps) is undetectable by devices.
+authenticity or integrity of downloaded code.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/FORENSIC_AUDIT.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/FORENSIC_AUDIT.md
 (see App Store catalog analysis)
 
 ### CVSS 3.1
 **Score: 9.6 (Critical)**
 Vector: AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031284.json](evidence/cve/CAN-2026-2031284.json)
+
 ---
 
-## CVE-2026-XXXX-6: GhostStrats Steganography
+## CVE-2026-2031285: GhostStrats Steganography
 
 ### Request
 | Field | Value |
@@ -235,32 +255,25 @@ steganography (p=0.49-0.52, indicating non-random data embedding). The images
 contain encrypted payload content. One filename,
 `key_phase2_VnhtlHnpvkc.png`, maps directly to the MJS JavaScript interpreter
 icon, suggesting the payload is phase-keyed to a specific device module.
-Additional filenames encode messages in multiple formats: Base64
-("safety is an illusion"), hexadecimal, leetspeak, and ROT-23
-("I Love Bruce"). The steganographic payloads are delivered through the
-untrusted App Store channel and executed in the unsandboxed MJS environment.
 
 ### Impact
 Covert communication channel delivering encrypted payloads hidden in theme
 images. Payload activation appears to depend on an external key (phase 2).
-The combination of steganographic delivery + sandbox bypass MJS interpreter
-creates an undetectable remote code execution mechanism.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/FORENSIC_AUDIT.md>
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/FORENSIC_AUDIT.md
 (see GhostStrats steganography section)
-
-Evidence files:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/tree/main/evidence/poc>
-  (PoC sandbox bypass demo)
 
 ### CVSS 3.1
 **Score: 7.5 (High)**
 Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
 
+### JSON Archive
+[evidence/cve/CAN-2026-2031285.json](evidence/cve/CAN-2026-2031285.json)
+
 ---
 
-## CVE-2026-XXXX-7: Server Divergence (Unpublished v2)
+## CVE-2026-2031286: Server Divergence (Unpublished v2)
 
 ### Request
 | Field | Value |
@@ -275,49 +288,45 @@ The Bruce App Store server at ghp.iceis.co.uk runs unpublished v2 code that
 diverges significantly from the public emericklaw/App-Store repository (tagged
 v0.1.1, frozen since November 2025). The live server delivers minified/
 obfuscated JavaScript (10.8 KB, 2 lines) with features not present in the
-public repo: active board detection via `require("device")` + `q.getBoard()`,
-commit-hash-based download tracking in metadata, server-side caching via
-`/BruceAppStore/cache/` with invalidation, and self-identification as
-"BruceDevices/App-Store" -- a GitHub organization that does not exist. The
-public repository has 10 commits and has not been updated since November 2025.
-Auditors, users, and security researchers reviewing the public code are
-evaluating a different application than what devices actually execute.
+public repo: active board detection, commit-hash-based download tracking,
+server-side caching with invalidation, and self-identification as
+"BruceDevices/App-Store" -- a GitHub organization that does not exist.
 
 ### Impact
 Trust confusion: users and security researchers audit public v0.1.1 source
 but devices execute unpublished v2. No code review or accountability for
-server-side changes. The maintainer misrepresents the server as belonging to
-the official BruceDevices GitHub organization when the actual source is in a
-personal account (emericklaw).
+server-side changes.
 
 ### Reference
-<https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/EVIDENCE_SUMMARY.md>
-
-Evidence files:
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/live-probes/appstore-v2-minified.js>
-  (minified v2 server response)
-- <https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/live-probes/response-headers.txt>
-  (server headers)
+https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/evidence/EVIDENCE_SUMMARY.md
 
 ### CVSS 3.1
 **Score: 9.1 (Critical)**
 Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N
 
----
-
-## Summary
-
-| CVE Request | Attack Vectors | Severity | File |
-|---|---|---|---|
-| CVE-2026-XXXX-1 | AV-001 + AV-003 (RCE chain) | Critical (9.8) | settings.cpp L1712, globals_js.cpp L298-309 |
-| CVE-2026-XXXX-2 | AV-002 (Fake sleep) | High (7.6) | powerSave.cpp, mykeyboard.cpp L1367-1369 |
-| CVE-2026-XXXX-3 | AV-004 (Reverse shell) | High (8.8) | reverseShell.cpp |
-| CVE-2026-XXXX-4 | AV-005 (Plaintext creds) | High (8.1) | config.h L62, settings.cpp, storage_js.cpp |
-| CVE-2026-XXXX-5 | AV-006 (Supply chain) | Critical (9.6) | App Store catalog (59 apps) |
-| CVE-2026-XXXX-6 | AV-007 (GhostStrats) | High (7.5) | Theme PNG files |
-| CVE-2026-XXXX-7 | AV-008 (Server divergence) | Critical (9.1) | Live v2 vs public v0.1.1 |
+### JSON Archive
+[evidence/cve/CAN-2026-2031286.json](evidence/cve/CAN-2026-2031286.json)
 
 ---
+
+## Submission Status Summary
+
+| CAN ID | Attack Vectors | CVSS | Severity | Submitted | JSON |
+|--------|---------------|------|----------|-----------|------|
+| CAN-2026-2031279 | AV-001+003: App Store RCE Chain | 9.8 | Critical | Yes | [evidence/cve/CAN-2026-2031279.json](evidence/cve/CAN-2026-2031279.json) |
+| CAN-2026-2031281 | AV-002: Fake Sleep | 7.6 | High | Yes | [evidence/cve/CAN-2026-2031281.json](evidence/cve/CAN-2026-2031281.json) |
+| CAN-2026-2031282 | AV-004: Reverse Shell | 8.8 | High | Yes | [evidence/cve/CAN-2026-2031282.json](evidence/cve/CAN-2026-2031282.json) |
+| CAN-2026-2031283 | AV-005: Plaintext Creds | 8.1 | High | Yes | [evidence/cve/CAN-2026-2031283.json](evidence/cve/CAN-2026-2031283.json) |
+| CAN-2026-2031284 | AV-006: Supply Chain | 9.6 | Critical | Yes | [evidence/cve/CAN-2026-2031284.json](evidence/cve/CAN-2026-2031284.json) |
+| CAN-2026-2031285 | AV-007: GhostStrats | 7.5 | High | Yes | [evidence/cve/CAN-2026-2031285.json](evidence/cve/CAN-2026-2031285.json) |
+| CAN-2026-2031286 | AV-008: Server Divergence | 9.1 | Critical | Yes | [evidence/cve/CAN-2026-2031286.json](evidence/cve/CAN-2026-2031286.json) |
+
+## Next Steps
+
+- Wait for MITRE acceptance (1-7 days per CVE)
+- Update CVE_MAPPING.md with assigned CVE IDs once received
+- Submit to oss-security mailing list after CVEs are public
+- Consider conference talk (DEF CON IoT Village, BSides, Hardwear.io)
 
 *Prepared from the forensic audit at
-<https://github.com/r13xr13/bruce-firmware-forensic-report>*
+https://github.com/r13xr13/bruce-firmware-forensic-report*

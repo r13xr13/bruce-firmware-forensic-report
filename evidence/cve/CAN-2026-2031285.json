@@ -1,0 +1,143 @@
+{
+    "containers": {
+        "cna": {
+            "affected": [
+                {
+                    "defaultStatus": "unaffected",
+                    "platforms": [
+                        "ESP32"
+                    ],
+                    "product": "Bruce App Store (GhostStrats theme)",
+                    "vendor": "BruceDevices",
+                    "versions": [
+                        {
+                            "status": "affected",
+                            "version": "1.0.0",
+                            "versionType": "custom"
+                        },
+                        {
+                            "status": "affected",
+                            "version": "1.15.0",
+                            "versionType": "custom"
+                        }
+                    ],
+                    "x_CopyOfCNAUnderAffected": "IN-CNA-LR-SCOPE"
+                }
+            ],
+            "credits": [
+                {
+                    "lang": "en",
+                    "type": "analyst",
+                    "value": "Heavy Butter"
+                }
+            ],
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "supportingMedia": [
+                        {
+                            "base64": false,
+                            "type": "text/html",
+                            "value": "14 PNG theme images distributed through Bruce App Store as GhostStrats show statistically significant LSB matching steganography (p=0.49-0.52) with encrypted payload content. Filenames encode messages in Base64 hex leetspeak and ROT-23. One filename maps to the JS interpreter icon."
+                        }
+                    ],
+                    "value": "14 PNG theme images distributed through Bruce App Store as GhostStrats show statistically significant LSB matching steganography (p=0.49-0.52) with encrypted payload content. Filenames encode messages in Base64 hex leetspeak and ROT-23. One filename maps to the JS interpreter icon."
+                }
+            ],
+            "metrics": [
+                {
+                    "cvssV4_0": {
+                        "Automatable": "NOT_DEFINED",
+                        "Recovery": "NOT_DEFINED",
+                        "Safety": "NOT_DEFINED",
+                        "attackComplexity": "LOW",
+                        "attackRequirements": "NONE",
+                        "attackVector": "NETWORK",
+                        "baseScore": 8.7,
+                        "baseSeverity": "HIGH",
+                        "privilegesRequired": "NONE",
+                        "providerUrgency": "NOT_DEFINED",
+                        "subAvailabilityImpact": "NONE",
+                        "subConfidentialityImpact": "NONE",
+                        "subIntegrityImpact": "NONE",
+                        "userInteraction": "NONE",
+                        "valueDensity": "NOT_DEFINED",
+                        "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+                        "version": "4.0",
+                        "vulnAvailabilityImpact": "NONE",
+                        "vulnConfidentialityImpact": "HIGH",
+                        "vulnIntegrityImpact": "NONE",
+                        "vulnerabilityResponseEffort": "NOT_DEFINED"
+                    },
+                    "format": "CVSS",
+                    "scenarios": [
+                        {
+                            "lang": "en",
+                            "value": "GENERAL"
+                        }
+                    ]
+                }
+            ],
+            "problemTypes": [
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-506",
+                            "description": "Embedded Malicious Code",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-656",
+                            "description": "Reliance on Security Through Obscurity",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                }
+            ],
+            "providerMetadata": {
+                "orgId": "efd32b81-8845-445a-ac72-9bd3173d4312"
+            },
+            "references": [
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/FORENSIC_AUDIT.md"
+                }
+            ],
+            "source": {
+                "discovery": "EXTERNAL"
+            },
+            "x_Other_CNA": {
+                "x_CNA_Contact": "IN-CNA-LR-SCOPE"
+            },
+            "x_Read_Landing": {
+                "x_Acknowledge": "YES"
+            },
+            "x_Request_Type": {
+                "x_Publication_Request": "YES"
+            },
+            "x_generator": {
+                "engine": "CVE-Request-form 0.0.1"
+            },
+            "x_theConversation": [
+                {
+                    "authorRole": "CNA-LR",
+                    "visibility": "public"
+                }
+            ]
+        }
+    },
+    "cveMetadata": {
+        "assignerOrgId": "efd32b81-8845-445a-ac72-9bd3173d4312",
+        "cveId": "CAN-2026-2031285",
+        "requesterUserId": "00000000-0000-4000-9000-000000000000",
+        "serial": 1,
+        "state": "PUBLISHED"
+    },
+    "dataType": "CVE_RECORD",
+    "dataVersion": "5.2"
+}

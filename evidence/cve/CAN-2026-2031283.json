@@ -1,0 +1,162 @@
+{
+    "containers": {
+        "cna": {
+            "affected": [
+                {
+                    "defaultStatus": "unaffected",
+                    "platforms": [
+                        "ESP32"
+                    ],
+                    "product": "Bruce firmware",
+                    "programFiles": [
+                        "core/config.h",
+                        "core/settings.cpp",
+                        "modules/bjs_interpreter/storage_js.cpp"
+                    ],
+                    "programRoutines": [
+                        {
+                            "name": "storage.read()"
+                        }
+                    ],
+                    "vendor": "BruceDevices",
+                    "versions": [
+                        {
+                            "status": "affected",
+                            "version": "1.0.0",
+                            "versionType": "custom"
+                        },
+                        {
+                            "status": "affected",
+                            "version": "1.15.0",
+                            "versionType": "custom"
+                        }
+                    ],
+                    "x_CopyOfCNAUnderAffected": "IN-CNA-LR-SCOPE"
+                }
+            ],
+            "credits": [
+                {
+                    "lang": "en",
+                    "type": "analyst",
+                    "value": "Heavy Butter"
+                }
+            ],
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "supportingMedia": [
+                        {
+                            "base64": false,
+                            "type": "text/html",
+                            "value": "Bruce firmware stores WiFi passwords API keys and device configuration secrets in cleartext in bruce.conf. The MJS storage module exposes full filesystem read write delete with no access control allowing any script to exfiltrate all credentials."
+                        }
+                    ],
+                    "value": "Bruce firmware stores WiFi passwords API keys and device configuration secrets in cleartext in bruce.conf. The MJS storage module exposes full filesystem read write delete with no access control allowing any script to exfiltrate all credentials."
+                }
+            ],
+            "metrics": [
+                {
+                    "cvssV4_0": {
+                        "Automatable": "NOT_DEFINED",
+                        "Recovery": "NOT_DEFINED",
+                        "Safety": "NOT_DEFINED",
+                        "attackComplexity": "LOW",
+                        "attackRequirements": "NONE",
+                        "attackVector": "LOCAL",
+                        "baseScore": 8.5,
+                        "baseSeverity": "HIGH",
+                        "privilegesRequired": "NONE",
+                        "providerUrgency": "NOT_DEFINED",
+                        "subAvailabilityImpact": "NONE",
+                        "subConfidentialityImpact": "NONE",
+                        "subIntegrityImpact": "NONE",
+                        "userInteraction": "NONE",
+                        "valueDensity": "NOT_DEFINED",
+                        "vectorString": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+                        "version": "4.0",
+                        "vulnAvailabilityImpact": "NONE",
+                        "vulnConfidentialityImpact": "HIGH",
+                        "vulnIntegrityImpact": "HIGH",
+                        "vulnerabilityResponseEffort": "NOT_DEFINED"
+                    },
+                    "format": "CVSS",
+                    "scenarios": [
+                        {
+                            "lang": "en",
+                            "value": "GENERAL"
+                        }
+                    ]
+                }
+            ],
+            "problemTypes": [
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-256",
+                            "description": "Plaintext Storage of a Password",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-312",
+                            "description": "Cleartext Storage of Sensitive Information",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                }
+            ],
+            "providerMetadata": {
+                "orgId": "efd32b81-8845-445a-ac72-9bd3173d4312"
+            },
+            "references": [
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/config.h#L62"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/storage_js.cpp"
+                }
+            ],
+            "source": {
+                "discovery": "EXTERNAL"
+            },
+            "x_Other_CNA": {
+                "x_CNA_Contact": "IN-CNA-LR-SCOPE"
+            },
+            "x_Read_Landing": {
+                "x_Acknowledge": "YES"
+            },
+            "x_Request_Type": {
+                "x_Publication_Request": "YES"
+            },
+            "x_generator": {
+                "engine": "CVE-Request-form 0.0.1"
+            },
+            "x_theConversation": [
+                {
+                    "authorRole": "CNA-LR",
+                    "visibility": "public"
+                }
+            ]
+        }
+    },
+    "cveMetadata": {
+        "assignerOrgId": "efd32b81-8845-445a-ac72-9bd3173d4312",
+        "cveId": "CAN-2026-2031283",
+        "requesterUserId": "00000000-0000-4000-9000-000000000000",
+        "serial": 1,
+        "state": "PUBLISHED"
+    },
+    "dataType": "CVE_RECORD",
+    "dataVersion": "5.2"
+}

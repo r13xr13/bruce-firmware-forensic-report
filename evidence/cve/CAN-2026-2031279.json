@@ -1,0 +1,181 @@
+{
+    "containers": {
+        "cna": {
+            "affected": [
+                {
+                    "defaultStatus": "unaffected",
+                    "platforms": [
+                        "ESP32"
+                    ],
+                    "product": "Bruce firmware (including bmorcelli launcher and all forks)",
+                    "programFiles": [
+                        "core/settings.cpp",
+                        "modules/bjs_interpreter/globals_js.cpp"
+                    ],
+                    "programRoutines": [
+                        {
+                            "name": "native_require()"
+                        },
+                        {
+                            "name": "http.begin()"
+                        }
+                    ],
+                    "vendor": "BruceDevices",
+                    "versions": [
+                        {
+                            "status": "affected",
+                            "version": "1.0.0",
+                            "versionType": "custom"
+                        },
+                        {
+                            "status": "affected",
+                            "version": "1.15.0",
+                            "versionType": "custom"
+                        }
+                    ],
+                    "x_CopyOfCNAUnderAffected": "IN-CNA-LR-SCOPE"
+                }
+            ],
+            "credits": [
+                {
+                    "lang": "en",
+                    "type": "analyst",
+                    "value": "Heavy Butter"
+                }
+            ],
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "supportingMedia": [
+                        {
+                            "base64": false,
+                            "type": "text/html",
+                            "value": "Bruce firmware App Store downloads and executes JavaScript/MJS code over plain HTTP with no TLS encryption, no code signing, no checksum verification, and no signature validation. An attacker with network access (MITM) can intercept, modify, or inject arbitrary code. Once delivered, the MJS interpreter require() function performs a global namespace lookup instead of sandboxed module resolution, allowing untrusted scripts to access native ESP32 APIs (filesystem, network, GPIO, Bluetooth, RF hardware) with no restrictions."
+                        }
+                    ],
+                    "value": "Bruce firmware App Store downloads and executes JavaScript/MJS code over plain HTTP with no TLS encryption, no code signing, no checksum verification, and no signature validation. An attacker with network access (MITM) can intercept, modify, or inject arbitrary code. Once delivered, the MJS interpreter require() function performs a global namespace lookup instead of sandboxed module resolution, allowing untrusted scripts to access native ESP32 APIs (filesystem, network, GPIO, Bluetooth, RF hardware) with no restrictions."
+                }
+            ],
+            "metrics": [
+                {
+                    "cvssV4_0": {
+                        "Automatable": "NOT_DEFINED",
+                        "Recovery": "NOT_DEFINED",
+                        "Safety": "NOT_DEFINED",
+                        "attackComplexity": "LOW",
+                        "attackRequirements": "NONE",
+                        "attackVector": "NETWORK",
+                        "baseScore": 10,
+                        "baseSeverity": "CRITICAL",
+                        "privilegesRequired": "NONE",
+                        "providerUrgency": "NOT_DEFINED",
+                        "subAvailabilityImpact": "HIGH",
+                        "subConfidentialityImpact": "HIGH",
+                        "subIntegrityImpact": "HIGH",
+                        "userInteraction": "NONE",
+                        "valueDensity": "NOT_DEFINED",
+                        "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+                        "version": "4.0",
+                        "vulnAvailabilityImpact": "HIGH",
+                        "vulnConfidentialityImpact": "HIGH",
+                        "vulnIntegrityImpact": "HIGH",
+                        "vulnerabilityResponseEffort": "NOT_DEFINED"
+                    },
+                    "format": "CVSS",
+                    "scenarios": [
+                        {
+                            "lang": "en",
+                            "value": "GENERAL"
+                        }
+                    ]
+                }
+            ],
+            "problemTypes": [
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-319",
+                            "description": "Cleartext Transmission of Sensitive Information",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-494",
+                            "description": "Download of Code Without Integrity Check",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-269",
+                            "description": "Improper Privilege Management",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                },
+                {
+                    "descriptions": [
+                        {
+                            "cweId": "CWE-94",
+                            "description": "Improper Control of Generation of Code (Code Injection)",
+                            "lang": "en",
+                            "type": "CWE"
+                        }
+                    ]
+                }
+            ],
+            "providerMetadata": {
+                "orgId": "efd32b81-8845-445a-ac72-9bd3173d4312"
+            },
+            "references": [
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/TRACEABILITY_MATRIX.md"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/core/settings.cpp#L1712"
+                },
+                {
+                    "url": "https://github.com/r13xr13/bruce-firmware-forensic-report/blob/main/bruce-firmware/modules/bjs_interpreter/globals_js.cpp#L298-L309"
+                }
+            ],
+            "source": {
+                "discovery": "EXTERNAL"
+            },
+            "x_Other_CNA": {
+                "x_CNA_Contact": "IN-CNA-LR-SCOPE"
+            },
+            "x_Read_Landing": {
+                "x_Acknowledge": "YES"
+            },
+            "x_Request_Type": {
+                "x_Publication_Request": "YES"
+            },
+            "x_generator": {
+                "engine": "CVE-Request-form 0.0.1"
+            },
+            "x_theConversation": [
+                {
+                    "authorRole": "CNA-LR",
+                    "visibility": "public"
+                }
+            ]
+        }
+    },
+    "cveMetadata": {
+        "assignerOrgId": "efd32b81-8845-445a-ac72-9bd3173d4312",
+        "cveId": "CAN-2026-2031279",
+        "requesterUserId": "00000000-0000-4000-9000-000000000000",
+        "serial": 1,
+        "state": "PUBLISHED"
+    },
+    "dataType": "CVE_RECORD",
+    "dataVersion": "5.2"
+}
