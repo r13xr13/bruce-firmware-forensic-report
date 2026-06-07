@@ -152,8 +152,6 @@ and the maintainers have had ample opportunity to address them.
 
 For questions or comments, feel free to open an issue or contact me directly.
 
--- Heavy Butter (r13xr13)
-
 ---
 
 <div align="center">
